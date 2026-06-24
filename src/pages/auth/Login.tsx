@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
+import API from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError('');
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
-    }
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
+  if (!email || !password) {
+    setError('Please fill in all fields');
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const response = await API.post('/api/auth/login', { email, password });
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('name', response.data.name);
+    localStorage.setItem('email', response.data.email);
+    localStorage.setItem('role', response.data.role);
+    localStorage.setItem('plan', response.data.plan);
+    navigate('/dashboard');
+  } catch (err: any) {
+    setError('Invalid email or password');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-vh-100 d-flex" style={{ background: 'var(--background)' }}>
