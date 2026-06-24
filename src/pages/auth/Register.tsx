@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import API from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -8,25 +10,48 @@ function Register() {
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    if (!name || !email || !password || !confirm || !phone) {
-      setError('Please fill in all fields');
-      return;
-    }
-    if (password !== confirm) {
-      setError('Passwords do not match');
-      return;
-    }
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1000);
-  };
+  const handleRegister = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError('');
+
+  if (!name || !email || !password || !confirm || !phone) {
+    setError('Please fill in all fields');
+    return;
+  }
+  if (password !== confirm) {
+    setError('Passwords do not match');
+    return;
+  }
+  if (password.length < 6) {
+    setError('Password must be at least 6 characters');
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const response = await API.post('/api/auth/register', {
+      name,
+      email,
+      phone,
+      password,
+      village: '',
+      district: '',
+      state: '',
+    });
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('name', response.data.name);
+    localStorage.setItem('email', response.data.email);
+    localStorage.setItem('role', response.data.role);
+    localStorage.setItem('plan', response.data.plan);
+    navigate('/dashboard');
+  } catch (err: any) {
+    setError('Email already registered');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="min-vh-100 d-flex" style={{ background: 'var(--background)' }}>
