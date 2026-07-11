@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Dashboard from './pages/dashboard/Dashboard';
-
+import OrchardPage from './pages/orchard/Orchard';
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +12,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/orchard" element={<div style={{padding:'30px'}}>Orchard page coming next</div>} />
+        <Route path="/orchard" element={<OrchardPage />} />
         <Route path="/finance" element={<div style={{padding:'30px'}}>Finance coming soon</div>} />
         <Route path="/spray" element={<div style={{padding:'30px'}}>Spray schedule coming soon</div>} />
         <Route path="/climate" element={<div style={{padding:'30px'}}>Climate coming soon</div>} />
