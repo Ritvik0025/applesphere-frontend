@@ -13,7 +13,7 @@ interface Orchard {
   district: string;
   establishedYear: number;
   elevation: number;
-}
+}// this is the frontend code for the dashboard page of the AppleSphere application. It fetches orchard data from the backend API and displays it in a user-friendly format. The dashboard shows total trees, number of orchards, total area in Kanal, and net profit (currently hardcoded to ₹0). It also provides a section for managing orchards and placeholders for upcoming features like weather, spray schedule, and climate information.
 
 function Dashboard() {
   const navigate = useNavigate();
