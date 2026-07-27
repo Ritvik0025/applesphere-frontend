@@ -253,7 +253,7 @@ function OrchardPage() {
                   Cancel
                 </button>
                 <button className="btn btn-primary" onClick={handleCreate}>
-                  Save Orchard
+                  Save Orchards
                 </button>
               </div>
             </div>
@@ -261,7 +261,7 @@ function OrchardPage() {
         </div>
       )}
 
-    </Layout>
+    </Layout> // thisis my layout button
   );
 }
 
